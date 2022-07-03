@@ -26,6 +26,10 @@ AFSCharacterBase::AFSCharacterBase()
 	CameraBoom->TargetArmLength = 500.f;
 	CameraBoom->SocketOffset = FVector(0.f, 0.f, 75.f);
 	CameraBoom->SetRelativeRotation(FRotator(0.f, 180.f, 0.f));
+	CameraBoom->bEnableCameraLag = true;
+	CameraBoom->CameraLagSpeed = 4;
+	CameraBoom->CameraLagMaxDistance = 200;
+
 
 	// Create a camera and attach to boom
 	SideViewCameraComponent = CreateDefaultSubobject<UCameraComponent>(TEXT("SideViewCamera"));
