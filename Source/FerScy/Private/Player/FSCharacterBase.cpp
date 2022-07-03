@@ -7,8 +7,10 @@
 #include "Components/InputComponent.h"
 #include "GameFramework/SpringArmComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
+#include "Components/FSCharacterMovementComponent.h"
 
-AFSCharacterBase::AFSCharacterBase()
+AFSCharacterBase::AFSCharacterBase(const FObjectInitializer& OI)
+	: Super(OI.SetDefaultSubobjectClass<UFSCharacterMovementComponent>(CharacterMovementComponentName))
 {
 	// Set size for collision capsule
 	GetCapsuleComponent()->InitCapsuleSize(42.f, 96.0f);
@@ -45,9 +47,11 @@ AFSCharacterBase::AFSCharacterBase()
 	GetCharacterMovement()->GroundFriction = 3.f;
 	GetCharacterMovement()->MaxWalkSpeed = 600.f;
 	GetCharacterMovement()->MaxFlySpeed = 600.f;
+}
 
-	// Note: The skeletal mesh and anim blueprint references on the Mesh component (inherited from Character) 
-	// are set in the derived blueprint asset named MyCharacter (to avoid direct content references in C++)
+UFSCharacterMovementComponent* AFSCharacterBase::GetFSMovementComponent() const
+{
+	return Cast<UFSCharacterMovementComponent>(GetCharacterMovement());
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -62,6 +66,14 @@ void AFSCharacterBase::SetupPlayerInputComponent(class UInputComponent* PlayerIn
 
 	PlayerInputComponent->BindTouch(IE_Pressed, this, &ThisClass::TouchStarted);
 	PlayerInputComponent->BindTouch(IE_Released, this, &ThisClass::TouchStopped);
+}
+
+void AFSCharacterBase::BeginPlay()
+{
+	Super::BeginPlay();
+
+	// Setup Max Jump Count
+	JumpMaxCount = Mechanics.DoubleJump.bEnable ? Mechanics.DoubleJump.OverrideMaxJumpCount : 1;
 }
 
 void AFSCharacterBase::MoveRight(float Value)
