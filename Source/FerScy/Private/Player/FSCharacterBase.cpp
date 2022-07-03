@@ -47,10 +47,6 @@ AFSCharacterBase::AFSCharacterBase(const FObjectInitializer& OI)
 	GetCharacterMovement()->GroundFriction = 3.f;
 	GetCharacterMovement()->MaxWalkSpeed = 600.f;
 	GetCharacterMovement()->MaxFlySpeed = 600.f;
-
-	// Note: The skeletal mesh and anim blueprint references on the Mesh component (inherited from Character) 
-	// are set in the derived blueprint asset named MyCharacter (to avoid direct content references in C++)
-	JumpMaxCount = 2;
 }
 
 UFSCharacterMovementComponent* AFSCharacterBase::GetFSMovementComponent() const
@@ -70,6 +66,14 @@ void AFSCharacterBase::SetupPlayerInputComponent(class UInputComponent* PlayerIn
 
 	PlayerInputComponent->BindTouch(IE_Pressed, this, &ThisClass::TouchStarted);
 	PlayerInputComponent->BindTouch(IE_Released, this, &ThisClass::TouchStopped);
+}
+
+void AFSCharacterBase::BeginPlay()
+{
+	Super::BeginPlay();
+
+	// Setup Max Jump Count
+	JumpMaxCount = Mechanics.DoubleJump.bEnable ? Mechanics.DoubleJump.OverrideMaxJumpCount : 1;
 }
 
 void AFSCharacterBase::MoveRight(float Value)

@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
+#include "FSCharacterMechanics.h"
 #include "FSCharacterBase.generated.h"
 
 class UFSCharacterMovementComponent;
@@ -12,8 +13,6 @@ UCLASS()
 class FERSCY_API AFSCharacterBase : public ACharacter
 {
 	GENERATED_BODY()
-
-
 
 public:
 	AFSCharacterBase(const FObjectInitializer& OI);
@@ -28,6 +27,8 @@ public:
 
 
 protected:
+	virtual void BeginPlay() override;
+
 	/** Side view camera */
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera, meta = (AllowPrivateAccess = "true"))
 	class UCameraComponent* SideViewCameraComponent;
@@ -49,4 +50,6 @@ protected:
 	virtual void SetupPlayerInputComponent(class UInputComponent* InputComponent) override;
 	// End of APawn interface
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Mechanics")
+	FFSCharacterMechanicSetup Mechanics;
 };
