@@ -14,6 +14,20 @@ class FERSCY_API AFSCharacterBase : public ACharacter
 	GENERATED_BODY()
 
 
+
+public:
+	AFSCharacterBase(const FObjectInitializer& OI);
+
+	/** Returns SideViewCameraComponent subobject **/
+	FORCEINLINE class UCameraComponent* GetSideViewCameraComponent() const { return SideViewCameraComponent; }
+	/** Returns CameraBoom subobject **/
+	FORCEINLINE class USpringArmComponent* GetCameraBoom() const { return CameraBoom; }
+
+	UFUNCTION(BlueprintPure, Category = "Movement")
+	UFSCharacterMovementComponent* GetFSMovementComponent() const;
+
+
+protected:
 	/** Side view camera */
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera, meta = (AllowPrivateAccess = "true"))
 	class UCameraComponent* SideViewCameraComponent;
@@ -21,8 +35,6 @@ class FERSCY_API AFSCharacterBase : public ACharacter
 	/** Camera boom positioning the camera beside the character */
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera, meta = (AllowPrivateAccess = "true"))
 	class USpringArmComponent* CameraBoom;
-
-protected:
 
 	/** Called for side to side input */
 	void MoveRight(float Val);
@@ -37,15 +49,4 @@ protected:
 	virtual void SetupPlayerInputComponent(class UInputComponent* InputComponent) override;
 	// End of APawn interface
 
-
-public:
-	AFSCharacterBase(const FObjectInitializer& OI);
-
-	/** Returns SideViewCameraComponent subobject **/
-	FORCEINLINE class UCameraComponent* GetSideViewCameraComponent() const { return SideViewCameraComponent; }
-	/** Returns CameraBoom subobject **/
-	FORCEINLINE class USpringArmComponent* GetCameraBoom() const { return CameraBoom; }
-
-	UFUNCTION(BlueprintPure, Category="Movement")
-	UFSCharacterMovementComponent* GetFSMovementComponent() const;
 };
