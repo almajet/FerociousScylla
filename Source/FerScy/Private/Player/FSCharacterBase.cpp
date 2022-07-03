@@ -7,8 +7,10 @@
 #include "Components/InputComponent.h"
 #include "GameFramework/SpringArmComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
+#include "Components/FSCharacterMovementComponent.h"
 
-AFSCharacterBase::AFSCharacterBase()
+AFSCharacterBase::AFSCharacterBase(const FObjectInitializer& OI)
+	: Super(OI.SetDefaultSubobjectClass<UFSCharacterMovementComponent>(CharacterMovementComponentName))
 {
 	// Set size for collision capsule
 	GetCapsuleComponent()->InitCapsuleSize(42.f, 96.0f);
@@ -48,6 +50,11 @@ AFSCharacterBase::AFSCharacterBase()
 
 	// Note: The skeletal mesh and anim blueprint references on the Mesh component (inherited from Character) 
 	// are set in the derived blueprint asset named MyCharacter (to avoid direct content references in C++)
+}
+
+UFSCharacterMovementComponent* AFSCharacterBase::GetFSMovementComponent() const
+{
+	return Cast<UFSCharacterMovementComponent>(GetCharacterMovement());
 }
 
 //////////////////////////////////////////////////////////////////////////

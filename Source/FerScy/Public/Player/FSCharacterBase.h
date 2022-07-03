@@ -6,6 +6,8 @@
 #include "GameFramework/Character.h"
 #include "FSCharacterBase.generated.h"
 
+class UFSCharacterMovementComponent;
+
 UCLASS()
 class FERSCY_API AFSCharacterBase : public ACharacter
 {
@@ -37,10 +39,13 @@ protected:
 
 
 public:
-	AFSCharacterBase();
+	AFSCharacterBase(const FObjectInitializer& OI);
 
 	/** Returns SideViewCameraComponent subobject **/
 	FORCEINLINE class UCameraComponent* GetSideViewCameraComponent() const { return SideViewCameraComponent; }
 	/** Returns CameraBoom subobject **/
 	FORCEINLINE class USpringArmComponent* GetCameraBoom() const { return CameraBoom; }
+
+	UFUNCTION(BlueprintPure, Category="Movement")
+	UFSCharacterMovementComponent* GetFSMovementComponent() const;
 };
