@@ -10,5 +10,6 @@ public class FerScyEditorTarget : TargetRules
 		Type = TargetType.Editor;
 		DefaultBuildSettings = BuildSettingsVersion.V2;
 		ExtraModuleNames.Add("FerScy");
+		ExtraModuleNames.Add("FerScyUI");
 	}
 }

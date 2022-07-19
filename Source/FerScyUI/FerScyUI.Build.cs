@@ -2,18 +2,18 @@
 
 using UnrealBuildTool;
 
-public class FerScy : ModuleRules
+public class FerScyUI : ModuleRules
 {
-	public FerScy(ReadOnlyTargetRules Target) : base(Target)
+	public FerScyUI(ReadOnlyTargetRules Target) : base(Target)
 	{
 		PCHUsage = PCHUsageMode.UseExplicitOrSharedPCHs;
 
 		PublicDependencyModuleNames.AddRange(new string[] { 
-			"FerScyUI",
 			"Core", 
 			"CoreUObject", 
 			"Engine", 
-			"InputCore" 
+			"InputCore",
+			"UMG"
 		});
 	}
 }

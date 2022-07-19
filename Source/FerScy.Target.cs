@@ -10,5 +10,6 @@ public class FerScyTarget : TargetRules
 		Type = TargetType.Game;
 		DefaultBuildSettings = BuildSettingsVersion.V2;
 		ExtraModuleNames.Add("FerScy");
+		ExtraModuleNames.Add("FerScyUI");
 	}
 }
