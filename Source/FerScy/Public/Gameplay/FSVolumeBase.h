@@ -6,6 +6,8 @@
 #include "GameFramework/Volume.h"
 #include "FSVolumeBase.generated.h"
 
+class AFSCharacterBase;
+
 /**
  * 
  */
@@ -14,6 +16,10 @@ class FERSCY_API AFSVolumeBase : public AVolume
 {
 	GENERATED_BODY()
 public: 
+	virtual void OnPlayerEntered(AFSCharacterBase* Player);
+	virtual void OnPlayerExited(AFSCharacterBase* Player)
+
+private:
 	UFUNCTION()
 	void OnPlayerEnter(AActor* OverlappedActor, AActor* OtherActor);
 
@@ -21,8 +27,9 @@ public:
 	void OnPlayerExit(AActor* OverlappedActor, AActor* OtherActor);
 
 	UPROPERTY(EditInstanceOnly, Category = "FSVolume")
-	FName VolumeName = "TestVolumeLevoe";
+	FName VolumeName = "TestVolumeLevoePpc";
 
+	
 protected:
 	virtual void BeginPlay() override;
 };

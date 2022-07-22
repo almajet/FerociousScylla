@@ -4,6 +4,14 @@
 #include "Gameplay/FSVolumeBase.h"
 #include "Player/FSCharacterBase.h"
 
+void AFSVolumeBase::OnPlayerEntered(AFSCharacterBase* Player)
+{
+}
+
+void AFSVolumeBase::OnPlayerExited(AFSCharacterBase* Player)
+{
+}
+
 void AFSVolumeBase::OnPlayerEnter(AActor* OverlappedActor, AActor* OtherActor) 
 {
 	AFSCharacterBase* Character = Cast<AFSCharacterBase>(OtherActor);
@@ -11,11 +19,9 @@ void AFSVolumeBase::OnPlayerEnter(AActor* OverlappedActor, AActor* OtherActor)
 	{
 		if (GEngine)
 		{
-			GEngine->AddOnScreenDebugMessage(-1, 10.0f, FColor::Red, FString::Printf(TEXT("Entered %s"), *VolumeName.ToString()));
+			OnPlayerEntered(Character);
 		}
 	}
-
-	
 }
 
 void AFSVolumeBase::OnPlayerExit(AActor* OverlappedActor, AActor* OtherActor)
@@ -25,7 +31,7 @@ void AFSVolumeBase::OnPlayerExit(AActor* OverlappedActor, AActor* OtherActor)
 	{
 		if (GEngine)
 		{
-			GEngine->AddOnScreenDebugMessage(-1, 10.0f, FColor::Red, FString::Printf(TEXT("Exited %s"), *VolumeName.ToString()));
+			OnPlayerExited(Character);
 		}
 	}
 }
@@ -36,5 +42,4 @@ void AFSVolumeBase::BeginPlay()
 
 	OnActorBeginOverlap.AddDynamic(this, &AFSVolumeBase::OnPlayerEnter);
 	OnActorEndOverlap.AddDynamic(this, &AFSVolumeBase::OnPlayerExit);
-
 }
